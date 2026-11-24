@@ -55,7 +55,7 @@ export function FooterConsultation() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.6, ease: EXPO_EASE }}
-                className="inline-block font-mono-index text-[13px] text-[#52525B]"
+                className="inline-block font-mono-index text-[13px] text-[#3B404C]"
               >
                 (Client Words)
               </motion.span>
@@ -86,7 +86,7 @@ export function FooterConsultation() {
                 >
                   <ArrowRight className="h-4 w-4" strokeWidth={1.6} />
                 </motion.button>
-                <span className="ml-2 font-mono-index text-[12px] text-[#52525B] tabular-nums">
+                <span className="ml-2 font-mono-index text-[12px] text-[#3B404C] tabular-nums">
                   {String(quoteIdx + 1).padStart(2, '0')} /{' '}
                   {String(TESTIMONIALS.length).padStart(2, '0')}
                 </span>
@@ -146,10 +146,10 @@ export function FooterConsultation() {
                   <span className="font-medium text-[#111111]">
                     {currentQuote.author}
                   </span>
-                  <span aria-hidden="true" className="text-[#52525B]">
+                  <span aria-hidden="true" className="text-[#3B404C]">
                     ·
                   </span>
-                  <span className="text-[#52525B]">{currentQuote.context}</span>
+                  <span className="text-[#3B404C]">{currentQuote.context}</span>
                 </footer>
               </motion.blockquote>
             </AnimatePresence>
@@ -168,7 +168,7 @@ export function FooterConsultation() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.6, ease: EXPO_EASE }}
-            className="inline-block font-mono-index text-[13px] text-[#52525B]"
+            className="inline-block font-mono-index text-[13px] text-[#3B404C]"
           >
             (Direct Consultation)
           </motion.span>
@@ -182,7 +182,7 @@ export function FooterConsultation() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.75, delay: 0.14, ease: EXPO_EASE }}
-            className="mt-4 max-w-[46ch] text-[16px] leading-[1.6] text-[#52525B]"
+            className="mt-4 max-w-[46ch] text-[16px] leading-[1.6] text-[#3B404C]"
           >
             Whether acquiring quietly off-market or preparing a Florida residence
             for launch, reach Shaunda directly for a private conversation.
@@ -224,18 +224,18 @@ export function FooterConsultation() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.75, delay: 0.26, ease: EXPO_EASE }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[14px] text-[#52525B]"
+            className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[14px] text-[#3B404C]"
           >
             <a
               href="tel:+19415550184"
-              className="font-mono-index text-[#111111] transition-colors hover:text-[#52525B]"
+              className="font-mono-index text-[#111111] transition-colors hover:text-[#3B404C]"
             >
               (941) 555-0184
             </a>
             <span aria-hidden="true">·</span>
             <a
               href="mailto:shaundakillingsworth@gmail.com?subject=Private%20Real%20Estate%20Consultation%20%E2%80%94%20Killingsworth%20Homes"
-              className="text-[#111111] transition-colors hover:text-[#52525B]"
+              className="text-[#111111] transition-colors hover:text-[#3B404C]"
             >
               shaundakillingsworth@gmail.com
             </a>
@@ -254,7 +254,7 @@ export function FooterConsultation() {
         <HairlineDivider />
 
         {/* Quiet Single-Row Brokerage License & Copyright Line */}
-        <div className="mt-8 flex flex-col gap-3 text-[12px] text-[#52525B] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-3 text-[12px] text-[#3B404C] sm:flex-row sm:items-center sm:justify-between">
           <span>
             © {new Date().getFullYear()} Killingsworth Homes · Florida
           </span>

@@ -27,10 +27,10 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-stretch lg:gap-12">
           {/* Left: High-Contrast Editorial Portrait with Curtain Reveal, Continuous Motion & Sheen */}
           <div className="lg:col-span-5">
-            <div className="group flex h-full flex-col">
-              <div className="relative aspect-[4/4.4] w-full flex-1 overflow-hidden rounded-[2px] shadow-[0_16px_42px_-18px_rgba(17,17,17,0.2)]">
-                <CurtainReveal onScroll className="h-full w-full">
-                  <div className="h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]">
+            <div className="group flex flex-col">
+              <div className="relative aspect-[4/4.4] w-full overflow-hidden rounded-[2px] bg-[#E5E7EB] shadow-[0_16px_42px_-18px_rgba(17,17,17,0.2)]">
+                <CurtainReveal delay={0.1} className="absolute inset-0">
+                  <div className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]">
                     <ParallaxImage
                       src={AGENT_PORTRAIT}
                       alt="Shaunda Killingsworth on the Florida waterfront"
@@ -50,7 +50,7 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.6, delay: 0.25, ease: EXPO_EASE }}
-                className="mt-3 flex items-center justify-between text-[12px] text-[#52525B]"
+                className="mt-3 flex items-center justify-between text-[12px] text-[#3B404C]"
               >
                 <span>Shaunda Killingsworth</span>
                 <span className="font-mono-index">Principal Advisor · Florida</span>
@@ -66,7 +66,7 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.6, ease: EXPO_EASE }}
-                className="inline-block font-mono-index text-[13px] text-[#52525B]"
+                className="inline-block font-mono-index text-[13px] text-[#3B404C]"
               >
                 (01) Principal-Led Advisory
               </motion.span>
@@ -79,7 +79,7 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
                 </MaskedInViewReveal>
               </h2>
 
-              <div className="mt-6 space-y-4 text-[16px] leading-[1.65] text-[#52525B]">
+              <div className="mt-6 space-y-4 text-[16px] leading-[1.65] text-[#3B404C]">
                 <motion.p
                   initial={prefersReduced ? false : { opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -173,7 +173,7 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
                       delayOffset={idx * 0.12}
                     />
                   </div>
-                  <p className="mt-2 text-[14px] text-[#52525B]">{stat.label}</p>
+                  <p className="mt-2 text-[14px] text-[#3B404C]">{stat.label}</p>
                 </motion.div>
               </motion.div>
             ))}

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { X, ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { X, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { PropertyItem } from '../data/siteData';
-import { EXPO_EASE } from './MotionPrimitives';
+import { EXPO_EASE, MagneticLink } from './MotionPrimitives';
 
 interface PropertyDrawerProps {
   property: PropertyItem | null;
@@ -12,19 +12,9 @@ interface PropertyDrawerProps {
 export function PropertyDrawer({ property, onClose }: PropertyDrawerProps) {
   const prefersReduced = useReducedMotion();
   const [activeImageIdx, setActiveImageIdx] = useState(0);
-  const [name, setName] = useState('');
-  const [contact, setContact] = useState('');
-  const [preferredDate, setPreferredDate] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     setActiveImageIdx(0);
-    setSubmitted(false);
-    setErrorMsg('');
-    setName('');
-    setContact('');
-    setPreferredDate('');
   }, [property?.id]);
 
   useEffect(() => {
@@ -52,15 +42,13 @@ export function PropertyDrawer({ property, onClose }: PropertyDrawerProps) {
     };
   }, [property, onClose]);
 
-  const handleTourSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !contact.trim()) {
-      setErrorMsg('Please enter your name and email or phone number.');
-      return;
-    }
-    setErrorMsg('');
-    setSubmitted(true);
-  };
+  const inquiryHref = property
+    ? `mailto:shaundakillingsworth@gmail.com?subject=${encodeURIComponent(
+        property.status === 'For Sale'
+          ? `Private Tour Request — ${property.title} (${property.city})`
+          : `Off-Market Comps Inquiry — ${property.title} (${property.city})`
+      )}`
+    : '#';
 
   return (
     <AnimatePresence>
@@ -87,11 +75,11 @@ export function PropertyDrawer({ property, onClose }: PropertyDrawerProps) {
             animate={prefersReduced ? { opacity: 1 } : { x: '0%' }}
             exit={prefersReduced ? { opacity: 0 } : { x: '100%' }}
             transition={{ duration: 0.55, ease: EXPO_EASE }}
-            className="relative z-10 flex h-full w-full max-w-[640px] flex-col overflow-y-auto border-l border-black/12 bg-gradient-to-b from-white via-[#F4F5F8] to-[#E6E8EE] text-[#111111]"
+            className="relative z-10 flex h-full w-full max-w-[640px] flex-col overflow-y-auto border-l border-black/14 bg-gradient-to-br from-[#F8FAFD] via-[#D8E0EB] to-[#C2CBD9] text-[#111111]"
           >
             {/* Sticky Drawer Header */}
-            <div className="sticky top-0 z-20 flex items-center justify-between border-b border-black/10 bg-white/90 px-6 py-4 backdrop-blur-md md:px-8">
-              <div className="flex items-center gap-3 text-[13px] text-[#52525B]">
+            <div className="sticky top-0 z-20 flex items-center justify-between border-b border-black/12 bg-[#EEF2F7]/85 px-6 py-4 backdrop-blur-md md:px-8">
+              <div className="flex items-center gap-3 text-[13px] text-[#3B404C]">
                 <span className="font-mono-index text-[#111111]">
                   {property.index}
                 </span>
@@ -204,7 +192,7 @@ export function PropertyDrawer({ property, onClose }: PropertyDrawerProps) {
 
               {/* Property Header & Specs */}
               <div className="mt-8 border-b border-black/10 pb-6">
-                <p className="text-[13px] text-[#52525B]">
+                <p className="text-[13px] text-[#3B404C]">
                   {property.neighborhood} · {property.city}
                 </p>
                 <div className="mt-2 flex flex-wrap items-baseline justify-between gap-4">
@@ -219,7 +207,7 @@ export function PropertyDrawer({ property, onClose }: PropertyDrawerProps) {
                   </span>
                 </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] text-[#52525B] tabular-nums">
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] text-[#3B404C] tabular-nums">
                   <span>{property.beds} Beds</span>
                   <span aria-hidden="true">·</span>
                   <span>{property.baths} Baths</span>
@@ -228,7 +216,7 @@ export function PropertyDrawer({ property, onClose }: PropertyDrawerProps) {
                   <span aria-hidden="true">·</span>
                   <span>Built {property.yearBuilt}</span>
                 </div>
-                <p className="mt-2 text-[13px] text-[#52525B]">
+                <p className="mt-2 text-[13px] text-[#3B404C]">
                   {property.lotSummary}
                 </p>
               </div>
@@ -238,7 +226,7 @@ export function PropertyDrawer({ property, onClose }: PropertyDrawerProps) {
                 <p className="text-[15px] leading-[1.65] text-[#111111]">
                   {property.architecturalNote}
                 </p>
-                <ul className="mt-4 space-y-2 text-[14px] text-[#52525B]">
+                <ul className="mt-4 space-y-2 text-[14px] text-[#3B404C]">
                   {property.highlights.map((item, idx) => (
                     <motion.li
                       key={item}
@@ -258,90 +246,32 @@ export function PropertyDrawer({ property, onClose }: PropertyDrawerProps) {
                 </ul>
               </div>
 
-              {/* Quick Tour Request */}
+              {/* Direct Walkthrough / Comps Button */}
               <div className="mt-6 rounded-[2px] border border-black/10 bg-white/75 p-6 backdrop-blur-sm">
                 <h3 className="text-[16px] font-medium text-[#111111]">
                   {property.status === 'For Sale'
                     ? 'Request a Private Tour'
                     : 'Inquire About Similar Off-Market Homes'}
                 </h3>
-                <p className="mt-1 text-[13px] text-[#52525B]">
+                <p className="mt-1 text-[13px] text-[#3B404C]">
                   Direct response from Shaunda Killingsworth within 2 hours.
                 </p>
 
-                {submitted ? (
-                  <div className="mt-5 flex items-start gap-3 border border-black/10 bg-white p-4">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#111111]" />
-                    <div className="text-[14px]">
-                      <p className="font-medium text-[#111111]">
-                        Tour inquiry received for {property.title}
-                      </p>
-                      <p className="mt-1 text-[#52525B]">
-                        Shaunda will reach out directly at {contact} to confirm
-                        access details.
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <form onSubmit={handleTourSubmit} className="mt-5 space-y-4">
-                    <div>
-                      <label htmlFor="drawer-name" className="sr-only">
-                        Your Name
-                      </label>
-                      <input
-                        id="drawer-name"
-                        type="text"
-                        placeholder="Your Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="w-full border-b border-black/18 bg-transparent py-2.5 text-[14px] text-[#111111] placeholder:text-[#52525B] focus:border-[#111111] focus:outline-none"
-                      />
-                    </div>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div>
-                        <label htmlFor="drawer-contact" className="sr-only">
-                          Email or Phone
-                        </label>
-                        <input
-                          id="drawer-contact"
-                          type="text"
-                          placeholder="Email or Phone"
-                          value={contact}
-                          onChange={(e) => setContact(e.target.value)}
-                          className="w-full border-b border-black/18 bg-transparent py-2.5 text-[14px] text-[#111111] placeholder:text-[#52525B] focus:border-[#111111] focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="drawer-date" className="sr-only">
-                          Preferred Date
-                        </label>
-                        <input
-                          id="drawer-date"
-                          type="text"
-                          placeholder="Preferred Day (e.g. Thu Afternoon)"
-                          value={preferredDate}
-                          onChange={(e) => setPreferredDate(e.target.value)}
-                          className="w-full border-b border-black/18 bg-transparent py-2.5 text-[14px] text-[#111111] placeholder:text-[#52525B] focus:border-[#111111] focus:outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    {errorMsg && (
-                      <p className="text-[13px] text-[#111111]" role="alert">
-                        {errorMsg}
-                      </p>
-                    )}
-
-                    <button
-                      type="submit"
-                      className="mt-2 inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-[#111111] px-6 py-2.5 text-[14px] font-medium text-white transition-colors hover:bg-[#2A2A2A] cursor-pointer"
-                    >
-                      {property.status === 'For Sale'
-                        ? 'Schedule Private Walkthrough'
-                        : 'Request Off-Market Comps'}
-                    </button>
-                  </form>
-                )}
+                <MagneticLink
+                  shimmer
+                  href={inquiryHref}
+                  className="group mt-5 inline-flex min-h-[48px] w-full items-center justify-center rounded-full bg-[#111111] px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#2A2A2A] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] focus-visible:ring-offset-2"
+                >
+                  <span>
+                    {property.status === 'For Sale'
+                      ? 'Schedule Private Walkthrough'
+                      : 'Request Off-Market Comps'}
+                  </span>
+                  <ArrowUpRight
+                    className="h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    strokeWidth={1.75}
+                  />
+                </MagneticLink>
               </div>
             </div>
           </motion.aside>

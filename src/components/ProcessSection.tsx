@@ -19,7 +19,7 @@ export function ProcessSection() {
   return (
     <section
       id="process"
-      className="relative overflow-hidden border-y border-black/10 bg-gradient-to-b from-white/45 via-[#DFE3EB]/75 to-white/45 py-16 backdrop-blur-[2px] md:py-24"
+      className="relative overflow-hidden border-y border-black/12 bg-gradient-to-b from-white/35 via-[#C4CDD9]/60 to-white/35 py-16 backdrop-blur-[3px] md:py-24"
     >
       {/* Subtle Continuous Ambient Sheen Across the Process Band */}
       <ShimmerSweep delay={0.5} duration={4.5} repeatDelay={5.5} />
@@ -32,7 +32,7 @@ export function ProcessSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.6, ease: EXPO_EASE }}
-              className="inline-block font-mono-index text-[13px] text-[#52525B]"
+              className="inline-block font-mono-index text-[13px] text-[#3B404C]"
             >
               (Process)
             </motion.span>
@@ -64,7 +64,7 @@ export function ProcessSection() {
                   className={`relative pb-3 text-[14px] font-medium whitespace-nowrap shrink-0 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] ${
                     isSelected
                       ? 'text-[#111111]'
-                      : 'text-[#52525B] hover:text-[#111111]'
+                      : 'text-[#3B404C] hover:text-[#111111]'
                   }`}
                 >
                   {tab.label}
@@ -144,13 +144,13 @@ export function ProcessSection() {
                   }}
                   className="will-change-transform"
                 >
-                  <span className="inline-block font-mono-index text-[13px] text-[#52525B] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:text-[#111111]">
+                  <span className="inline-block font-mono-index text-[13px] text-[#3B404C] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:text-[#111111]">
                     {step.index}
                   </span>
                   <h3 className="mt-4 text-[19px] font-medium tracking-[-0.02em] text-[#111111]">
                     {step.title}
                   </h3>
-                  <p className="mt-2.5 text-[15px] leading-[1.6] text-[#52525B]">
+                  <p className="mt-2.5 text-[15px] leading-[1.6] text-[#3B404C]">
                     {step.description}
                   </p>
                 </motion.div>

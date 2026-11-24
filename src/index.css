@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #ECEEF2;
-  --bg-gradient: linear-gradient(160deg, #FFFFFF 0%, #EEF0F4 28%, #D8DCE5 58%, #ECEEF2 82%, #FFFFFF 100%);
+  --bg-primary: #DCE2EC;
+  --bg-secondary: #C6CEDB;
+  --bg-gradient: linear-gradient(135deg, #F8FAFD 0%, #D4DCE7 20%, #B8C2D2 42%, #EEF2F8 62%, #C1CBD9 82%, #F3F6FA 100%);
   --text-primary: #111111;
-  --text-secondary: #52525B;
-  --border-hairline: 1px solid rgba(17, 17, 17, 0.12);
+  --text-secondary: #3B404C;
+  --border-hairline: 1px solid rgba(17, 17, 17, 0.14);
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -19,10 +19,11 @@
   }
 
   body {
-    background-color: #FFFFFF;
+    background-color: var(--bg-primary);
     background-image:
-      radial-gradient(ellipse 75% 45% at 15% 20%, rgba(203, 210, 224, 0.55), transparent 65%),
-      radial-gradient(ellipse 65% 50% at 85% 60%, rgba(196, 203, 218, 0.5), transparent 65%),
+      radial-gradient(ellipse 80% 50% at 15% 18%, rgba(255, 255, 255, 0.85), transparent 62%),
+      radial-gradient(ellipse 70% 55% at 85% 48%, rgba(154, 166, 186, 0.62), transparent 65%),
+      radial-gradient(ellipse 75% 45% at 30% 85%, rgba(255, 255, 255, 0.72), transparent 65%),
       var(--bg-gradient);
     background-attachment: fixed;
     color: var(--text-primary);

@@ -107,8 +107,8 @@ function PropertyCard({
           onMouseMove={handleMouseMove}
           className="relative aspect-[4/3] w-full overflow-hidden rounded-[2px] bg-[#E5E7EB] shadow-[0_14px_38px_-18px_rgba(17,17,17,0.18)]"
         >
-          <CurtainReveal delay={(index % 2) * 0.08} className="h-full w-full">
-            <div className="h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]">
+          <CurtainReveal delay={(index % 2) * 0.08} className="absolute inset-0">
+            <div className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]">
               <ParallaxImage
                 src={property.images[0]}
                 alt={`${property.title} in ${property.neighborhood}`}
@@ -178,7 +178,7 @@ function PropertyCard({
             className="absolute top-0 left-0 h-px w-full origin-left scale-x-0 bg-[#111111] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
           />
 
-          <div className="flex items-center justify-between gap-4 text-[13px] text-[#52525B]">
+          <div className="flex items-center justify-between gap-4 text-[13px] text-[#3B404C]">
             <span>
               <span className="font-mono-index mr-2 text-[#111111]">
                 {property.index}
@@ -199,7 +199,7 @@ function PropertyCard({
             </span>
           </div>
 
-          <p className="mt-1.5 text-[14px] text-[#52525B] tabular-nums">
+          <p className="mt-1.5 text-[14px] text-[#3B404C] tabular-nums">
             {property.beds} Beds · {property.baths} Baths · {property.sqft}
           </p>
         </div>
@@ -234,7 +234,7 @@ export function PortfolioSection({ onSelectProperty }: PortfolioSectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.6, ease: EXPO_EASE }}
-              className="inline-block font-mono-index text-[13px] text-[#52525B]"
+              className="inline-block font-mono-index text-[13px] text-[#3B404C]"
             >
               (Curated)
             </motion.span>
@@ -268,7 +268,7 @@ export function PortfolioSection({ onSelectProperty }: PortfolioSectionProps) {
                   className={`relative pb-3 text-[14px] font-medium whitespace-nowrap shrink-0 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] ${
                     isSelected
                       ? 'text-[#111111]'
-                      : 'text-[#52525B] hover:text-[#111111]'
+                      : 'text-[#3B404C] hover:text-[#111111]'
                   }`}
                 >
                   {tab.label}

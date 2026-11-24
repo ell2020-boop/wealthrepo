@@ -25,7 +25,7 @@ interface HeroProps {
 
 export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
   const prefersReduced = useReducedMotion();
-  const heroRef = useRef<HTMLElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -42,91 +42,116 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
   const bgScale = useTransform(smoothScroll, [0, 1], [1, 1.08]);
 
   return (
-    <section
-      ref={heroRef}
-      id="top"
-      className="relative flex min-h-[calc(100svh-4rem)] w-full flex-col justify-between overflow-hidden bg-[#18191D]"
-    >
-      {/* Full-Bleed Architectural Residence Background with Continuous Cinema Pan & Zoom */}
-      <motion.div
-        style={prefersReduced ? undefined : { scale: bgScale }}
-        className="absolute inset-0 z-0 origin-center will-change-transform"
-      >
-        <motion.div
-          animate={
-            prefersReduced
-              ? undefined
-              : {
-                  scale: [1, 1.07, 1],
-                  x: ['-1%', '1%', '-1%'],
-                }
-          }
-          transition={{
-            duration: 16,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="h-full w-full will-change-transform"
-        >
-          <CurtainReveal delay={0.05} className="h-full w-full">
-            <ParallaxImage
-              src={HERO_IMAGE}
-              alt="Contemporary board-formed concrete and travertine Florida coastal residence overlooking the Gulf"
-              className="h-full w-full"
-              offsetPercent={5}
-              priority
-            />
-          </CurtainReveal>
-        </motion.div>
-
-        {/* Subtle Continuous Sunlight Glass Glint Across Hero Frame */}
-        <ShimmerSweep delay={1.2} duration={3.4} repeatDelay={4.5} />
-
-        {/* Measured Contrast Scrims for Legibility Across All Luminance Zones */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/45"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-black/25"
-        />
-      </motion.div>
-
-      {/* Top Editorial Bar over Hero Background with Travelling Glint Hairline */}
-      <div className="relative z-10 mx-auto w-full max-w-[1320px] px-5 pt-8 md:px-8 md:pt-12 lg:px-10">
-        <motion.div
-          initial={prefersReduced ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.16, ease: EXPO_EASE }}
-          className="flex flex-wrap items-center justify-between gap-4 pb-4 text-[13px] text-white/85"
-        >
-          <div className="flex items-center gap-3">
-            <span className="font-mono-index text-white">(Featured)</span>
-            <span aria-hidden="true">·</span>
-            <span>Florida Residential &amp; Waterfront Advisory</span>
-          </div>
-
-          <div className="flex items-center gap-3 font-mono-index text-[12px] text-white/80 tabular-nums">
-            <span>604 Lighthouse Point, Longboat Key</span>
-            <span aria-hidden="true" className="hidden sm:inline">·</span>
-            <span className="hidden sm:inline">$7,900,000</span>
-          </div>
-        </motion.div>
-
-        <HairlineDivider dark delay={0.2} />
-      </div>
-
-      {/* Bottom 12-Column Editorial Headline & Action Anchor */}
-      <motion.div
-        style={
+    <div ref={heroRef} id="top" className="relative w-full overflow-hidden bg-[#18191D]">
+      <motion.section
+        animate={
           prefersReduced
             ? undefined
-            : { y: foregroundY, opacity: foregroundOpacity }
+            : {
+                y: [0, -6, 0],
+              }
         }
-        className="relative z-10 mx-auto w-full max-w-[1320px] px-5 pt-20 pb-10 md:px-8 md:pt-32 md:pb-14 lg:px-10 will-change-transform"
+        transition={{
+          duration: 6.5,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+        className="relative flex min-h-[calc(100svh-4rem)] w-full flex-col justify-between overflow-hidden bg-[#18191D] will-change-transform"
       >
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
+        {/* Full-Bleed Architectural Residence Background with Continuous Cinema Pan & Zoom */}
+        <motion.div
+          style={prefersReduced ? undefined : { scale: bgScale }}
+          className="absolute inset-0 z-0 origin-center will-change-transform"
+        >
+          <motion.div
+            animate={
+              prefersReduced
+                ? undefined
+                : {
+                    scale: [1, 1.07, 1],
+                    x: ['-1%', '1%', '-1%'],
+                  }
+            }
+            transition={{
+              duration: 16,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="h-full w-full will-change-transform"
+          >
+            <CurtainReveal delay={0.05} className="h-full w-full">
+              <ParallaxImage
+                src={HERO_IMAGE}
+                alt="Contemporary board-formed concrete and travertine Florida coastal residence overlooking the Gulf"
+                className="h-full w-full"
+                offsetPercent={5}
+                priority
+              />
+            </CurtainReveal>
+          </motion.div>
+
+          {/* Subtle Continuous Sunlight Glass Glint Across Hero Frame */}
+          <ShimmerSweep delay={1.2} duration={3.4} repeatDelay={4.5} />
+
+          {/* Measured Contrast Scrims for Legibility Across All Luminance Zones */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/45"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-black/25"
+          />
+        </motion.div>
+
+        {/* Top Editorial Bar over Hero Background with Travelling Glint Hairline */}
+        <div className="relative z-10 mx-auto w-full max-w-[1320px] px-5 pt-8 md:px-8 md:pt-12 lg:px-10">
+          <motion.div
+            initial={prefersReduced ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.16, ease: EXPO_EASE }}
+            className="flex flex-wrap items-center justify-between gap-4 pb-4 text-[13px] text-white/85"
+          >
+            <div className="flex items-center gap-3">
+              <span className="font-mono-index text-white">(Featured)</span>
+              <span aria-hidden="true">·</span>
+              <span>Florida Residential &amp; Waterfront Advisory</span>
+            </div>
+
+            <div className="flex items-center gap-3 font-mono-index text-[12px] text-white/80 tabular-nums">
+              <span>604 Lighthouse Point, Longboat Key</span>
+              <span aria-hidden="true" className="hidden sm:inline">·</span>
+              <span className="hidden sm:inline">$7,900,000</span>
+            </div>
+          </motion.div>
+
+          <HairlineDivider dark delay={0.2} />
+        </div>
+
+        {/* Bottom 12-Column Editorial Headline & Action Anchor */}
+        <motion.div
+          style={
+            prefersReduced
+              ? undefined
+              : { y: foregroundY, opacity: foregroundOpacity }
+          }
+          className="relative z-10 mx-auto w-full max-w-[1320px] px-5 pt-20 pb-10 md:px-8 md:pt-32 md:pb-14 lg:px-10 will-change-transform"
+        >
+          <motion.div
+            animate={
+              prefersReduced
+                ? undefined
+                : {
+                    y: [0, -5, 0],
+                  }
+            }
+            transition={{
+              duration: 5.5,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end will-change-transform"
+          >
           <div className="lg:col-span-8">
             <h1 className="headline-tight text-[clamp(2.3rem,4.9vw,4.35rem)] font-medium leading-[1.04] text-white">
               <MaskedLineReveal delay={0.1}>
@@ -175,7 +200,7 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
               </button>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Continuous Kinetic Scroll Cue Visible Across All Devices */}
         {!prefersReduced && (
@@ -209,7 +234,8 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
             </motion.span>
           </motion.div>
         )}
-      </motion.div>
-    </section>
+        </motion.div>
+      </motion.section>
+    </div>
   );
 }

@@ -16,34 +16,39 @@ export function AmbientGradientBackdrop() {
   const prefersReduced = useReducedMotion();
 
   if (prefersReduced) {
-    return null;
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(135deg,#F8FAFD_0%,#D4DCE7_24%,#B8C2D2_48%,#EEF2F8_70%,#C3CDDB_100%)]"
+      />
+    );
   }
 
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[linear-gradient(135deg,#F8FAFD_0%,#D4DCE7_22%,#B8C2D2_45%,#EEF2F8_66%,#C2CBD9_86%,#F3F6FA_100%)]"
     >
-      {/* Top-Left Luminous Silver Bloom */}
+      {/* Top-Left Specular Silver Highlight Bloom */}
       <motion.div
         animate={{
-          x: ['-10%', '14%', '-10%'],
+          x: ['-12%', '16%', '-12%'],
           y: ['-8%', '12%', '-8%'],
-          scale: [1, 1.16, 1],
-          rotate: [0, 12, 0],
+          scale: [1, 1.18, 1],
+          rotate: [0, 14, 0],
         }}
         transition={{
           duration: 14,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute -top-36 -left-32 h-[540px] w-[540px] md:h-[760px] md:w-[760px] rounded-full bg-[radial-gradient(circle,rgba(176,184,202,0.58)_0%,rgba(226,230,238,0.22)_45%,rgba(255,255,255,0)_72%)] will-change-transform"
+        className="absolute -top-36 -left-32 h-[540px] w-[540px] md:h-[780px] md:w-[780px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.92)_0%,rgba(226,232,242,0.52)_42%,rgba(255,255,255,0)_72%)] will-change-transform"
       />
 
-      {/* Mid-Right Cool Pearl-Grey Wave */}
+      {/* Mid-Right Brushed Chrome Depth Wave */}
       <motion.div
         animate={{
-          x: ['10%', '-14%', '10%'],
+          x: ['10%', '-15%', '10%'],
           y: ['8%', '-12%', '8%'],
           scale: [1.1, 0.94, 1.1],
           rotate: [0, -14, 0],
@@ -53,22 +58,22 @@ export function AmbientGradientBackdrop() {
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute top-[30%] -right-36 h-[560px] w-[560px] md:h-[820px] md:w-[820px] rounded-full bg-[radial-gradient(circle,rgba(162,172,192,0.52)_0%,rgba(218,223,233,0.2)_48%,rgba(255,255,255,0)_74%)] will-change-transform"
+        className="absolute top-[26%] -right-36 h-[560px] w-[560px] md:h-[840px] md:w-[840px] rounded-full bg-[radial-gradient(circle,rgba(148,160,180,0.68)_0%,rgba(190,200,216,0.34)_48%,rgba(255,255,255,0)_74%)] will-change-transform"
       />
 
-      {/* Bottom-Center Architectural Mist Drift */}
+      {/* Bottom-Center Luminous Platinum Sheen */}
       <motion.div
         animate={{
-          x: ['-12%', '12%', '-12%'],
-          y: ['6%', '-8%', '6%'],
-          scale: [0.96, 1.14, 0.96],
+          x: ['-12%', '14%', '-12%'],
+          y: ['6%', '-10%', '6%'],
+          scale: [0.96, 1.15, 0.96],
         }}
         transition={{
           duration: 18,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute -bottom-40 left-[15%] h-[500px] w-[500px] md:h-[740px] md:w-[740px] rounded-full bg-[radial-gradient(circle,rgba(182,190,206,0.5)_0%,rgba(255,255,255,0)_70%)] will-change-transform"
+        className="absolute -bottom-40 left-[12%] h-[520px] w-[520px] md:h-[760px] md:w-[760px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.82)_0%,rgba(198,207,222,0.38)_46%,rgba(255,255,255,0)_72%)] will-change-transform"
       />
     </div>
   );
@@ -154,10 +159,10 @@ export function MarqueeRibbon({
 
   return (
     <div
-      className={`overflow-hidden border-y border-black/10 bg-white/55 py-3.5 backdrop-blur-[3px] ${className}`}
+      className={`overflow-hidden border-y border-black/12 bg-white/38 py-3.5 backdrop-blur-[4px] ${className}`}
     >
       {prefersReduced ? (
-        <div className="mx-auto max-w-[1320px] px-5 md:px-8 lg:px-10 font-mono-index text-[12px] text-[#52525B] truncate">
+        <div className="mx-auto max-w-[1320px] px-5 md:px-8 lg:px-10 font-mono-index text-[12px] text-[#3B404C] truncate">
           {items.join(' · ')}
         </div>
       ) : (
@@ -169,7 +174,7 @@ export function MarqueeRibbon({
               repeat: Infinity,
               ease: 'linear',
             }}
-            className="flex whitespace-nowrap will-change-transform font-mono-index text-[12px] tracking-[0.04em] text-[#52525B]"
+            className="flex whitespace-nowrap will-change-transform font-mono-index text-[12px] tracking-[0.04em] text-[#3B404C]"
           >
             <span className="pr-2">{line}</span>
             <span className="pr-2" aria-hidden="true">

@@ -32,7 +32,7 @@ export function Navbar({ onNavigate, onBookCall }: NavbarProps) {
       initial={prefersReduced ? false : { y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: EXPO_EASE }}
-      className="sticky top-0 z-40 w-full border-b border-black/10 bg-white/80 backdrop-blur-md"
+      className="sticky top-0 z-40 w-full border-b border-black/12 bg-gradient-to-r from-[#F4F7FB]/85 via-[#E4E9F1]/85 to-[#F1F4F9]/85 backdrop-blur-md"
     >
       <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between gap-8 px-5 md:px-8 lg:px-10">
         {/* Zone 1: Single-line Brand Wordmark */}
@@ -60,7 +60,7 @@ export function Navbar({ onNavigate, onBookCall }: NavbarProps) {
                 e.preventDefault();
                 handleNavClick(link.id);
               }}
-              className="group relative whitespace-nowrap shrink-0 py-1 text-[14px] font-medium text-[#52525B] transition-colors duration-200 hover:text-[#111111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] focus-visible:ring-offset-4"
+              className="group relative whitespace-nowrap shrink-0 py-1 text-[14px] font-medium text-[#3B404C] transition-colors duration-200 hover:text-[#111111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] focus-visible:ring-offset-4"
             >
               {link.label}
               <span
