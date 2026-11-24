@@ -7,6 +7,7 @@ import {
   CurtainReveal,
   MaskedInViewReveal,
   RollingCounter,
+  ShimmerSweep,
   EXPO_EASE,
 } from './MotionPrimitives';
 
@@ -24,23 +25,26 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
 
         {/* Asymmetric 2-Column Split */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-stretch lg:gap-12">
-          {/* Left: High-Contrast Editorial Portrait with Curtain Reveal */}
+          {/* Left: High-Contrast Editorial Portrait with Curtain Reveal, Continuous Motion & Sheen */}
           <div className="lg:col-span-5">
             <div className="group flex h-full flex-col">
-              <CurtainReveal
-                onScroll
-                className="flex-1 rounded-[2px] shadow-[0_14px_38px_-18px_rgba(17,17,17,0.16)]"
-              >
-                <div className="h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]">
-                  <ParallaxImage
-                    src={AGENT_PORTRAIT}
-                    alt="Shaunda Killingsworth on the Florida waterfront"
-                    className="aspect-[4/4.4] h-full w-full rounded-[2px]"
-                    imgClassName="object-cover object-top contrast-[1.03]"
-                    offsetPercent={3.5}
-                  />
-                </div>
-              </CurtainReveal>
+              <div className="relative aspect-[4/4.4] w-full flex-1 overflow-hidden rounded-[2px] shadow-[0_16px_42px_-18px_rgba(17,17,17,0.2)]">
+                <CurtainReveal onScroll className="h-full w-full">
+                  <div className="h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]">
+                    <ParallaxImage
+                      src={AGENT_PORTRAIT}
+                      alt="Shaunda Killingsworth on the Florida waterfront"
+                      className="h-full w-full rounded-[2px]"
+                      imgClassName="object-cover object-top contrast-[1.03]"
+                      offsetPercent={3.5}
+                      continuousDrift
+                      driftDelay={0.5}
+                    />
+                  </div>
+                </CurtainReveal>
+                <ShimmerSweep delay={0.8} duration={3.0} repeatDelay={4.5} />
+              </div>
+
               <motion.div
                 initial={prefersReduced ? false : { opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -128,7 +132,7 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
           </div>
         </div>
 
-        {/* Hairline-Divided 3-Stat Bar with Staggered Odometer Rolling Numbers */}
+        {/* Hairline-Divided 3-Stat Bar with Continuous Wave Levitation & Odometer Numbers */}
         <div className="mt-16 md:mt-20">
           <HairlineDivider />
           <div className="grid grid-cols-1 divide-y divide-black/12 md:grid-cols-3 md:divide-x md:divide-y-0">
@@ -137,10 +141,9 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
                 key={stat.label}
                 initial={prefersReduced ? false : { opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                whileHover={prefersReduced ? undefined : { y: -3 }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.75, delay: idx * 0.1, ease: EXPO_EASE }}
-                className={`py-8 md:py-10 transition-colors ${
+                className={`py-8 md:py-10 ${
                   idx === 0
                     ? 'md:pr-8'
                     : idx === 1
@@ -148,15 +151,30 @@ export function AboutSection({ onBookCall }: AboutSectionProps) {
                     : 'md:pl-8'
                 }`}
               >
-                <div className="text-[clamp(2.25rem,3.6vw,3.25rem)] font-medium tracking-[-0.03em] text-[#111111]">
-                  <RollingCounter
-                    prefix={stat.prefix}
-                    value={stat.value}
-                    suffix={stat.suffix}
-                    delayOffset={idx * 0.12}
-                  />
-                </div>
-                <p className="mt-2 text-[14px] text-[#52525B]">{stat.label}</p>
+                <motion.div
+                  animate={
+                    prefersReduced
+                      ? undefined
+                      : { y: [0, -5, 0] }
+                  }
+                  transition={{
+                    duration: 4.5,
+                    delay: idx * 0.7,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  className="will-change-transform"
+                >
+                  <div className="text-[clamp(2.25rem,3.6vw,3.25rem)] font-medium tracking-[-0.03em] text-[#111111]">
+                    <RollingCounter
+                      prefix={stat.prefix}
+                      value={stat.value}
+                      suffix={stat.suffix}
+                      delayOffset={idx * 0.12}
+                    />
+                  </div>
+                  <p className="mt-2 text-[14px] text-[#52525B]">{stat.label}</p>
+                </motion.div>
               </motion.div>
             ))}
           </div>

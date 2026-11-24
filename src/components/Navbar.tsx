@@ -71,9 +71,10 @@ export function Navbar({ onNavigate, onBookCall }: NavbarProps) {
           ))}
         </nav>
 
-        {/* Zone 3: Magnetic Pill CTA + Mobile Trigger */}
+        {/* Zone 3: Magnetic Pill CTA with Continuous Luxury Shimmer + Mobile Trigger */}
         <div className="flex items-center gap-3 shrink-0">
           <MagneticButton
+            shimmer
             onClick={() => {
               setMobileOpen(false);
               onBookCall();
@@ -125,8 +126,8 @@ export function Navbar({ onNavigate, onBookCall }: NavbarProps) {
                   {link.label}
                 </motion.a>
               ))}
-              <button
-                type="button"
+              <MagneticButton
+                shimmer
                 onClick={() => {
                   setMobileOpen(false);
                   onBookCall();
@@ -134,7 +135,7 @@ export function Navbar({ onNavigate, onBookCall }: NavbarProps) {
                 className="mt-2 inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-[#111111] px-5 py-2.5 text-sm font-medium text-white"
               >
                 Book a Call
-              </button>
+              </MagneticButton>
             </nav>
           </motion.div>
         )}

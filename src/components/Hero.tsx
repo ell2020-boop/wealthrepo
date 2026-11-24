@@ -13,6 +13,8 @@ import {
   CurtainReveal,
   ParallaxImage,
   MagneticButton,
+  HairlineDivider,
+  ShimmerSweep,
   EXPO_EASE,
 } from './MotionPrimitives';
 
@@ -45,7 +47,7 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
       id="top"
       className="relative flex min-h-[calc(100svh-4rem)] w-full flex-col justify-between overflow-hidden bg-[#18191D]"
     >
-      {/* Full-Bleed Architectural Residence Background with Slow Ambient Breathing + Parallax */}
+      {/* Full-Bleed Architectural Residence Background with Continuous Cinema Pan & Zoom */}
       <motion.div
         style={prefersReduced ? undefined : { scale: bgScale }}
         className="absolute inset-0 z-0 origin-center will-change-transform"
@@ -54,10 +56,13 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
           animate={
             prefersReduced
               ? undefined
-              : { scale: [1, 1.045, 1] }
+              : {
+                  scale: [1, 1.07, 1],
+                  x: ['-1%', '1%', '-1%'],
+                }
           }
           transition={{
-            duration: 20,
+            duration: 16,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
@@ -74,6 +79,9 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
           </CurtainReveal>
         </motion.div>
 
+        {/* Subtle Continuous Sunlight Glass Glint Across Hero Frame */}
+        <ShimmerSweep delay={1.2} duration={3.4} repeatDelay={4.5} />
+
         {/* Measured Contrast Scrims for Legibility Across All Luminance Zones */}
         <div
           aria-hidden="true"
@@ -85,7 +93,7 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
         />
       </motion.div>
 
-      {/* Top Editorial Bar over Hero Background with Draw-In Hairline */}
+      {/* Top Editorial Bar over Hero Background with Travelling Glint Hairline */}
       <div className="relative z-10 mx-auto w-full max-w-[1320px] px-5 pt-8 md:px-8 md:pt-12 lg:px-10">
         <motion.div
           initial={prefersReduced ? false : { opacity: 0, y: 10 }}
@@ -99,20 +107,14 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
             <span>Florida Residential &amp; Waterfront Advisory</span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-3 font-mono-index text-[12px] text-white/80 tabular-nums">
+          <div className="flex items-center gap-3 font-mono-index text-[12px] text-white/80 tabular-nums">
             <span>604 Lighthouse Point, Longboat Key</span>
-            <span aria-hidden="true">·</span>
-            <span>$7,900,000</span>
+            <span aria-hidden="true" className="hidden sm:inline">·</span>
+            <span className="hidden sm:inline">$7,900,000</span>
           </div>
         </motion.div>
 
-        <motion.div
-          aria-hidden="true"
-          initial={prefersReduced ? false : { scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.0, delay: 0.2, ease: EXPO_EASE }}
-          className="h-px w-full origin-left bg-white/25"
-        />
+        <HairlineDivider dark delay={0.2} />
       </div>
 
       {/* Bottom 12-Column Editorial Headline & Action Anchor */}
@@ -122,11 +124,11 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
             ? undefined
             : { y: foregroundY, opacity: foregroundOpacity }
         }
-        className="relative z-10 mx-auto w-full max-w-[1320px] px-5 pt-24 pb-10 md:px-8 md:pt-32 md:pb-14 lg:px-10 will-change-transform"
+        className="relative z-10 mx-auto w-full max-w-[1320px] px-5 pt-20 pb-10 md:px-8 md:pt-32 md:pb-14 lg:px-10 will-change-transform"
       >
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
-            <h1 className="headline-tight text-[clamp(2.4rem,4.9vw,4.35rem)] font-medium leading-[1.04] text-white">
+            <h1 className="headline-tight text-[clamp(2.3rem,4.9vw,4.35rem)] font-medium leading-[1.04] text-white">
               <MaskedLineReveal delay={0.1}>
                 Finding architectural homes
               </MaskedLineReveal>
@@ -149,6 +151,7 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
 
             <div className="mt-6 flex flex-wrap items-center gap-5">
               <MagneticButton
+                shimmer
                 onClick={onExploreListings}
                 className="group inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white px-6 py-2.5 text-[14px] font-medium text-[#111111] transition-colors duration-200 hover:bg-[#ECEEF2] whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#111111]"
               >
@@ -174,27 +177,36 @@ export function Hero({ onExploreListings, onScheduleTour }: HeroProps) {
           </motion.div>
         </div>
 
-        {/* Quiet Kinetic Scroll Cue */}
+        {/* Continuous Kinetic Scroll Cue Visible Across All Devices */}
         {!prefersReduced && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6, ease: EXPO_EASE }}
             aria-hidden="true"
-            className="mt-10 hidden md:flex items-center gap-3 text-[11px] font-mono-index text-white/70"
+            className="mt-8 md:mt-10 flex items-center gap-3 text-[11px] font-mono-index text-white/75"
           >
-            <span className="relative h-6 w-px overflow-hidden bg-white/25">
+            <span className="relative h-6 w-px overflow-hidden bg-white/30">
               <motion.span
                 animate={{ y: ['-100%', '100%'] }}
                 transition={{
                   repeat: Infinity,
-                  duration: 1.7,
+                  duration: 1.5,
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className="block h-1/2 w-full bg-white"
               />
             </span>
-            <span>Scroll to explore</span>
+            <motion.span
+              animate={{ opacity: [0.55, 1, 0.55] }}
+              transition={{
+                repeat: Infinity,
+                duration: 2.6,
+                ease: 'easeInOut',
+              }}
+            >
+              Scroll to explore
+            </motion.span>
           </motion.div>
         )}
       </motion.div>

@@ -21,7 +21,6 @@ export default function App() {
     null
   );
   const lenisRef = useRef<Lenis | null>(null);
-  const nameInputRef = useRef<HTMLInputElement | null>(null);
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
@@ -61,26 +60,16 @@ export default function App() {
     }
   }, [selectedProperty]);
 
-  const scrollToSection = (sectionId: string, focusInput = false) => {
+  const scrollToSection = (sectionId: string) => {
     const target = document.getElementById(sectionId);
     if (!target) return;
 
     if (lenisRef.current && !prefersReduced) {
       lenisRef.current.scrollTo(target, {
         offset: sectionId === 'top' ? 0 : -64,
-        onComplete: () => {
-          if (focusInput) {
-            nameInputRef.current?.focus({ preventScroll: true });
-          }
-        },
       });
     } else {
       target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
-      if (focusInput) {
-        setTimeout(() => {
-          nameInputRef.current?.focus({ preventScroll: true });
-        }, 350);
-      }
     }
   };
 
@@ -91,14 +80,14 @@ export default function App() {
         {/* Section 1: Minimal Sticky Navbar */}
         <Navbar
           onNavigate={(id) => scrollToSection(id)}
-          onBookCall={() => scrollToSection('contact', true)}
+          onBookCall={() => scrollToSection('contact')}
         />
 
         <main>
           {/* Section 2: Editorial Hero */}
           <Hero
             onExploreListings={() => scrollToSection('listings')}
-            onScheduleTour={() => scrollToSection('contact', true)}
+            onScheduleTour={() => scrollToSection('contact')}
           />
 
           {/* Section 3: Curated Portfolio (Active & Recently Sold) */}
@@ -107,14 +96,14 @@ export default function App() {
           />
 
           {/* Section 4: Meet Shaunda Killingsworth (About + Track Record) */}
-          <AboutSection onBookCall={() => scrollToSection('contact', true)} />
+          <AboutSection onBookCall={() => scrollToSection('contact')} />
 
           {/* Section 5: How We Work Together (Buying / Selling Toggle) */}
           <ProcessSection />
         </main>
 
         {/* Section 6: Client Words + Direct Consultation Footer */}
-        <FooterConsultation nameInputRef={nameInputRef} />
+        <FooterConsultation />
 
         {/* Slide-Over Property Detail Drawer */}
         <PropertyDrawer

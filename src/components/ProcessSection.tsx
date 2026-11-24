@@ -4,6 +4,7 @@ import { BUYING_STEPS, SELLING_STEPS } from '../data/siteData';
 import {
   HairlineDivider,
   MaskedInViewReveal,
+  ShimmerSweep,
   EXPO_EASE,
 } from './MotionPrimitives';
 
@@ -18,9 +19,12 @@ export function ProcessSection() {
   return (
     <section
       id="process"
-      className="border-y border-black/10 bg-gradient-to-b from-white/45 via-[#DFE3EB]/75 to-white/45 py-16 backdrop-blur-[2px] md:py-24"
+      className="relative overflow-hidden border-y border-black/10 bg-gradient-to-b from-white/45 via-[#DFE3EB]/75 to-white/45 py-16 backdrop-blur-[2px] md:py-24"
     >
-      <div className="mx-auto max-w-[1320px] px-5 md:px-8 lg:px-10">
+      {/* Subtle Continuous Ambient Sheen Across the Process Band */}
+      <ShimmerSweep delay={0.5} duration={4.5} repeatDelay={5.5} />
+
+      <div className="relative z-10 mx-auto max-w-[1320px] px-5 md:px-8 lg:px-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <motion.span
@@ -83,7 +87,7 @@ export function ProcessSection() {
 
         <HairlineDivider className="mt-10 mb-10 md:mt-12 md:mb-12" />
 
-        {/* 3 Crisp Numbered Steps with Staggered Sequence & Draw-In Step Rules */}
+        {/* 3 Crisp Numbered Steps with Continuous Sequential Travelling Highlight & Wave Levitation */}
         <AnimatePresence mode="wait">
           <motion.div
             key={mode}
@@ -99,7 +103,6 @@ export function ProcessSection() {
                 initial={prefersReduced ? false : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={prefersReduced ? undefined : { opacity: 0, y: -12 }}
-                whileHover={prefersReduced ? undefined : { y: -4 }}
                 transition={{
                   duration: 0.6,
                   delay: idx * 0.09,
@@ -107,26 +110,50 @@ export function ProcessSection() {
                 }}
                 className="group relative flex flex-col pt-6"
               >
-                <motion.span
+                {/* Continuous Travelling Light Accent Along Step Divider */}
+                <div
                   aria-hidden="true"
-                  initial={prefersReduced ? false : { scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
+                  className="absolute top-0 left-0 right-0 h-px overflow-hidden bg-black/15"
+                >
+                  {!prefersReduced && (
+                    <motion.span
+                      animate={{ x: ['-40%', '220%'] }}
+                      transition={{
+                        duration: 2.8,
+                        delay: idx * 0.9,
+                        repeat: Infinity,
+                        repeatDelay: 2.0,
+                        ease: 'easeInOut',
+                      }}
+                      className="block h-full w-1/3 bg-gradient-to-r from-transparent via-[#111111] to-transparent will-change-transform"
+                    />
+                  )}
+                </div>
+
+                <motion.div
+                  animate={
+                    prefersReduced
+                      ? undefined
+                      : { y: [0, -4, 0] }
+                  }
                   transition={{
-                    duration: 0.75,
-                    delay: idx * 0.12,
-                    ease: EXPO_EASE,
+                    duration: 4.8,
+                    delay: idx * 0.75,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
                   }}
-                  className="absolute top-0 left-0 right-0 h-px origin-left bg-black/15 transition-colors duration-300 group-hover:bg-[#111111]"
-                />
-                <span className="font-mono-index text-[13px] text-[#52525B] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:text-[#111111]">
-                  {step.index}
-                </span>
-                <h3 className="mt-4 text-[19px] font-medium tracking-[-0.02em] text-[#111111]">
-                  {step.title}
-                </h3>
-                <p className="mt-2.5 text-[15px] leading-[1.6] text-[#52525B]">
-                  {step.description}
-                </p>
+                  className="will-change-transform"
+                >
+                  <span className="inline-block font-mono-index text-[13px] text-[#52525B] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:text-[#111111]">
+                    {step.index}
+                  </span>
+                  <h3 className="mt-4 text-[19px] font-medium tracking-[-0.02em] text-[#111111]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2.5 text-[15px] leading-[1.6] text-[#52525B]">
+                    {step.description}
+                  </p>
+                </motion.div>
               </motion.div>
             ))}
           </motion.div>

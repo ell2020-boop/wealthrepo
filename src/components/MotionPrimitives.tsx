@@ -24,31 +24,51 @@ export function AmbientGradientBackdrop() {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
     >
+      {/* Top-Left Luminous Silver Bloom */}
       <motion.div
         animate={{
-          x: ['-6%', '8%', '-6%'],
-          y: ['-4%', '7%', '-4%'],
-          scale: [1, 1.08, 1],
+          x: ['-10%', '14%', '-10%'],
+          y: ['-8%', '12%', '-8%'],
+          scale: [1, 1.16, 1],
+          rotate: [0, 12, 0],
         }}
         transition={{
-          duration: 22,
+          duration: 14,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute -top-40 -left-32 h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(190,198,214,0.48)_0%,rgba(255,255,255,0)_70%)] will-change-transform"
+        className="absolute -top-36 -left-32 h-[540px] w-[540px] md:h-[760px] md:w-[760px] rounded-full bg-[radial-gradient(circle,rgba(176,184,202,0.58)_0%,rgba(226,230,238,0.22)_45%,rgba(255,255,255,0)_72%)] will-change-transform"
       />
+
+      {/* Mid-Right Cool Pearl-Grey Wave */}
       <motion.div
         animate={{
-          x: ['6%', '-7%', '6%'],
-          y: ['5%', '-6%', '5%'],
-          scale: [1.05, 0.96, 1.05],
+          x: ['10%', '-14%', '10%'],
+          y: ['8%', '-12%', '8%'],
+          scale: [1.1, 0.94, 1.1],
+          rotate: [0, -14, 0],
         }}
         transition={{
-          duration: 26,
+          duration: 16,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute top-[42%] -right-40 h-[680px] w-[680px] rounded-full bg-[radial-gradient(circle,rgba(180,188,204,0.44)_0%,rgba(255,255,255,0)_72%)] will-change-transform"
+        className="absolute top-[30%] -right-36 h-[560px] w-[560px] md:h-[820px] md:w-[820px] rounded-full bg-[radial-gradient(circle,rgba(162,172,192,0.52)_0%,rgba(218,223,233,0.2)_48%,rgba(255,255,255,0)_74%)] will-change-transform"
+      />
+
+      {/* Bottom-Center Architectural Mist Drift */}
+      <motion.div
+        animate={{
+          x: ['-12%', '12%', '-12%'],
+          y: ['6%', '-8%', '6%'],
+          scale: [0.96, 1.14, 0.96],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+        className="absolute -bottom-40 left-[15%] h-[500px] w-[500px] md:h-[740px] md:w-[740px] rounded-full bg-[radial-gradient(circle,rgba(182,190,206,0.5)_0%,rgba(255,255,255,0)_70%)] will-change-transform"
       />
     </div>
   );
@@ -71,7 +91,47 @@ export function ScrollProgressBar() {
     <motion.div
       aria-hidden="true"
       style={{ scaleX }}
-      className="pointer-events-none absolute bottom-[-1px] left-0 right-0 h-[1.5px] origin-left bg-[#111111]"
+      className="pointer-events-none absolute bottom-[-1px] left-0 right-0 h-[2px] origin-left bg-[#111111]"
+    />
+  );
+}
+
+interface ShimmerSweepProps {
+  delay?: number;
+  duration?: number;
+  repeatDelay?: number;
+  light?: boolean;
+}
+
+export function ShimmerSweep({
+  delay = 0,
+  duration = 2.6,
+  repeatDelay = 3.2,
+  light = true,
+}: ShimmerSweepProps) {
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return null;
+  }
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      initial={{ x: '-140%' }}
+      animate={{ x: '240%' }}
+      transition={{
+        duration,
+        delay,
+        repeat: Infinity,
+        repeatDelay,
+        ease: [0.4, 0, 0.2, 1],
+      }}
+      className={`pointer-events-none absolute inset-y-0 left-0 w-1/2 -skew-x-12 will-change-transform ${
+        light
+          ? 'bg-gradient-to-r from-transparent via-white/30 to-transparent'
+          : 'bg-gradient-to-r from-transparent via-black/10 to-transparent'
+      }`}
     />
   );
 }
@@ -79,15 +139,22 @@ export function ScrollProgressBar() {
 interface MarqueeRibbonProps {
   items: string[];
   className?: string;
+  reverse?: boolean;
+  speedSeconds?: number;
 }
 
-export function MarqueeRibbon({ items, className = '' }: MarqueeRibbonProps) {
+export function MarqueeRibbon({
+  items,
+  className = '',
+  reverse = false,
+  speedSeconds = 26,
+}: MarqueeRibbonProps) {
   const prefersReduced = useReducedMotion();
   const line = items.join('  ·  ') + '  ·  ';
 
   return (
     <div
-      className={`overflow-hidden border-y border-black/10 bg-white/45 py-3.5 backdrop-blur-[2px] ${className}`}
+      className={`overflow-hidden border-y border-black/10 bg-white/55 py-3.5 backdrop-blur-[3px] ${className}`}
     >
       {prefersReduced ? (
         <div className="mx-auto max-w-[1320px] px-5 md:px-8 lg:px-10 font-mono-index text-[12px] text-[#52525B] truncate">
@@ -96,9 +163,9 @@ export function MarqueeRibbon({ items, className = '' }: MarqueeRibbonProps) {
       ) : (
         <div className="flex w-max">
           <motion.div
-            animate={{ x: ['0%', '-50%'] }}
+            animate={{ x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }}
             transition={{
-              duration: 34,
+              duration: speedSeconds,
               repeat: Infinity,
               ease: 'linear',
             }}
@@ -119,15 +186,17 @@ interface HairlineDividerProps {
   className?: string;
   delay?: number;
   dark?: boolean;
+  glint?: boolean;
 }
 
 export function HairlineDivider({
   className = '',
   delay = 0,
   dark = false,
+  glint = true,
 }: HairlineDividerProps) {
   const prefersReduced = useReducedMotion();
-  const bgClass = dark ? 'bg-white/25' : 'bg-black/12';
+  const bgClass = dark ? 'bg-white/25' : 'bg-black/14';
 
   if (prefersReduced) {
     return (
@@ -139,14 +208,33 @@ export function HairlineDivider({
   }
 
   return (
-    <motion.div
-      aria-hidden="true"
-      className={`h-px w-full ${bgClass} origin-left ${className}`}
-      initial={{ scaleX: 0 }}
-      whileInView={{ scaleX: 1 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration: 0.95, delay, ease: EXPO_EASE }}
-    />
+    <div className={`relative h-px w-full overflow-hidden ${className}`} aria-hidden="true">
+      <motion.div
+        className={`h-full w-full ${bgClass} origin-left`}
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.95, delay, ease: EXPO_EASE }}
+      />
+      {glint && (
+        <motion.div
+          initial={{ x: '-30%' }}
+          animate={{ x: '430%' }}
+          transition={{
+            duration: 3.4,
+            delay: delay + 0.5,
+            repeat: Infinity,
+            repeatDelay: 2.2,
+            ease: 'easeInOut',
+          }}
+          className={`absolute inset-y-0 left-0 w-1/4 will-change-transform ${
+            dark
+              ? 'bg-gradient-to-r from-transparent via-white/80 to-transparent'
+              : 'bg-gradient-to-r from-transparent via-[#111111]/65 to-transparent'
+          }`}
+        />
+      )}
+    </div>
   );
 }
 
@@ -198,7 +286,7 @@ export function MaskedInViewReveal({
         className="block will-change-transform"
         initial={{ y: '108%', opacity: 0.35 }}
         whileInView={{ y: '0%', opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
+        viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.95, delay, ease: EXPO_EASE }}
       >
         {children}
@@ -232,15 +320,15 @@ export function CurtainReveal({
         className={`overflow-hidden ${className}`}
         initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
         whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-        viewport={{ once: true, amount: 0.16 }}
-        transition={{ duration: 1.1, delay, ease: EXPO_EASE }}
+        viewport={{ once: true, amount: 0.01 }}
+        transition={{ duration: 1.0, delay, ease: EXPO_EASE }}
       >
         <motion.div
           className="h-full w-full will-change-transform"
-          initial={{ scale: 1.09 }}
+          initial={{ scale: 1.08 }}
           whileInView={{ scale: 1 }}
-          viewport={{ once: true, amount: 0.16 }}
-          transition={{ duration: 1.25, delay, ease: EXPO_EASE }}
+          viewport={{ once: true, amount: 0.01 }}
+          transition={{ duration: 1.15, delay, ease: EXPO_EASE }}
         >
           {children}
         </motion.div>
@@ -253,13 +341,13 @@ export function CurtainReveal({
       className={`overflow-hidden ${className}`}
       initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
       animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-      transition={{ duration: 1.15, delay, ease: EXPO_EASE }}
+      transition={{ duration: 1.1, delay, ease: EXPO_EASE }}
     >
       <motion.div
         className="h-full w-full will-change-transform"
-        initial={{ scale: 1.09 }}
+        initial={{ scale: 1.08 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 1.35, delay, ease: EXPO_EASE }}
+        transition={{ duration: 1.25, delay, ease: EXPO_EASE }}
       >
         {children}
       </motion.div>
@@ -274,6 +362,8 @@ interface ParallaxImageProps {
   imgClassName?: string;
   offsetPercent?: number;
   priority?: boolean;
+  continuousDrift?: boolean;
+  driftDelay?: number;
 }
 
 export function ParallaxImage({
@@ -282,7 +372,8 @@ export function ParallaxImage({
   className = '',
   imgClassName = '',
   offsetPercent = 4,
-  priority = false,
+  continuousDrift = false,
+  driftDelay = 0,
 }: ParallaxImageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
@@ -311,7 +402,7 @@ export function ParallaxImage({
       className={`relative overflow-hidden bg-[#E5E7EB] ${className}`}
     >
       {imgError ? (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[#ECEEF2] p-6 text-center text-[#52525B]">
+        <div className="absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-2 bg-[#ECEEF2] p-6 text-center text-[#52525B]">
           <Building2 className="h-6 w-6 opacity-50" strokeWidth={1.25} />
           <span className="text-xs font-medium tracking-tight text-[#111111]">
             {alt}
@@ -322,19 +413,46 @@ export function ParallaxImage({
           src={src}
           alt={alt}
           referrerPolicy="no-referrer"
-          loading={priority ? 'eager' : 'lazy'}
+          loading="eager"
+          decoding="async"
           onError={() => setImgError(true)}
-          className={`h-full w-full object-cover ${imgClassName}`}
+          className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`}
         />
+      ) : continuousDrift ? (
+        <motion.div
+          animate={{
+            scale: [1, 1.055, 1],
+            x: ['-0.6%', '0.6%', '-0.6%'],
+          }}
+          transition={{
+            duration: 14,
+            delay: driftDelay,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute inset-0 h-full w-full will-change-transform"
+        >
+          <motion.img
+            src={src}
+            alt={alt}
+            referrerPolicy="no-referrer"
+            loading="eager"
+            decoding="async"
+            onError={() => setImgError(true)}
+            style={{ y, scale: 1.11 }}
+            className={`h-full w-full object-cover will-change-transform ${imgClassName}`}
+          />
+        </motion.div>
       ) : (
         <motion.img
           src={src}
           alt={alt}
           referrerPolicy="no-referrer"
-          loading={priority ? 'eager' : 'lazy'}
+          loading="eager"
+          decoding="async"
           onError={() => setImgError(true)}
           style={{ y, scale: 1.11 }}
-          className={`h-full w-full object-cover will-change-transform ${imgClassName}`}
+          className={`absolute inset-0 h-full w-full object-cover will-change-transform ${imgClassName}`}
         />
       )}
     </div>
@@ -397,7 +515,7 @@ export function RollingCounter({
   delayOffset = 0,
 }: RollingCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.6 });
+  const isInView = useInView(ref, { once: true, amount: 0.4 });
   const prefersReduced = useReducedMotion();
 
   return (
@@ -440,12 +558,14 @@ interface MagneticButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   strength?: number;
+  shimmer?: boolean;
 }
 
 export function MagneticButton({
   children,
   className = '',
   strength = 0.28,
+  shimmer = false,
   onClick,
   type = 'button',
   ...rest
@@ -490,15 +610,84 @@ export function MagneticButton({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className={className}
+      className={`relative overflow-hidden ${className}`}
       {...(rest as Record<string, unknown>)}
     >
+      {shimmer && <ShimmerSweep duration={2.2} repeatDelay={2.8} />}
       <motion.span
         style={prefersReduced ? undefined : { x: springInnerX, y: springInnerY }}
-        className="inline-flex items-center gap-2"
+        className="relative z-10 inline-flex items-center gap-2"
       >
         {children}
       </motion.span>
     </motion.button>
+  );
+}
+
+interface MagneticLinkProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  children: React.ReactNode;
+  strength?: number;
+  shimmer?: boolean;
+}
+
+export function MagneticLink({
+  children,
+  className = '',
+  strength = 0.24,
+  shimmer = false,
+  href,
+  ...rest
+}: MagneticLinkProps) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const prefersReduced = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const innerX = useMotionValue(0);
+  const innerY = useMotionValue(0);
+
+  const springConfig = { stiffness: 280, damping: 20, mass: 0.35 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+  const springInnerX = useSpring(innerX, springConfig);
+  const springInnerY = useSpring(innerY, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (prefersReduced || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const offsetX = (e.clientX - (rect.left + rect.width / 2)) * strength;
+    const offsetY = (e.clientY - (rect.top + rect.height / 2)) * strength;
+    x.set(offsetX);
+    y.set(offsetY);
+    innerX.set(offsetX * 0.35);
+    innerY.set(offsetY * 0.35);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+    innerX.set(0);
+    innerY.set(0);
+  };
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      style={prefersReduced ? undefined : { x: springX, y: springY }}
+      whileTap={prefersReduced ? undefined : { scale: 0.97 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`relative overflow-hidden ${className}`}
+      {...(rest as Record<string, unknown>)}
+    >
+      {shimmer && <ShimmerSweep duration={2.2} repeatDelay={2.6} />}
+      <motion.span
+        style={prefersReduced ? undefined : { x: springInnerX, y: springInnerY }}
+        className="relative z-10 inline-flex items-center gap-3"
+      >
+        {children}
+      </motion.span>
+    </motion.a>
   );
 }

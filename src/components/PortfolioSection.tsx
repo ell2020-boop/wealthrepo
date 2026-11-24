@@ -19,6 +19,8 @@ import {
   CurtainReveal,
   MaskedInViewReveal,
   MarqueeRibbon,
+  ShimmerSweep,
+  HairlineDivider,
   EXPO_EASE,
 } from './MotionPrimitives';
 
@@ -59,7 +61,7 @@ function PropertyCard({
   const springX = useSpring(cursorX, { stiffness: 320, damping: 28, mass: 0.35 });
   const springY = useSpring(cursorY, { stiffness: 320, damping: 28, mass: 0.35 });
 
-  // Subtle column scroll offset so left & right columns glide past each other dynamically
+  // Subtle column scroll offset on desktop so left & right columns glide past each other
   const { scrollYProgress } = useScroll({
     target: outerRef,
     offset: ['start end', 'end start'],
@@ -67,7 +69,7 @@ function PropertyCard({
   const columnDrift = useTransform(
     scrollYProgress,
     [0, 1],
-    index % 2 === 1 ? [18, -18] : [0, 0]
+    index % 2 === 1 ? [16, -16] : [0, 0]
   );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -82,12 +84,12 @@ function PropertyCard({
       ref={outerRef}
       layout="position"
       style={prefersReduced ? undefined : { y: columnDrift }}
-      initial={prefersReduced ? false : { opacity: 0, y: 28 }}
+      initial={prefersReduced ? false : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.14 }}
+      viewport={{ once: true, amount: 0.01 }}
       transition={{
-        duration: 0.85,
-        delay: (index % 2) * 0.1,
+        duration: 0.75,
+        delay: (index % 2) * 0.08,
         ease: EXPO_EASE,
       }}
       className="group will-change-transform"
@@ -97,24 +99,53 @@ function PropertyCard({
         onClick={() => onSelect(property)}
         className="block w-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] focus-visible:ring-offset-4"
       >
-        {/* Image Frame with Scroll Curtain Reveal, 1.05x hover zoom & magnetic "View Home" cursor badge */}
+        {/* Image Frame with Explicit Aspect Ratio, Continuous Ken Burns Drift, Glass Shimmer Sweep & Cursor/Touch Badge */}
         <div
           ref={cardRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseMove={handleMouseMove}
-          className="relative overflow-hidden rounded-[2px] bg-[#E5E7EB] shadow-[0_14px_38px_-18px_rgba(17,17,17,0.16)]"
+          className="relative aspect-[4/3] w-full overflow-hidden rounded-[2px] bg-[#E5E7EB] shadow-[0_14px_38px_-18px_rgba(17,17,17,0.18)]"
         >
-          <CurtainReveal onScroll delay={(index % 2) * 0.08}>
-            <div className="transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]">
+          <CurtainReveal delay={(index % 2) * 0.08} className="h-full w-full">
+            <div className="h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]">
               <ParallaxImage
                 src={property.images[0]}
                 alt={`${property.title} in ${property.neighborhood}`}
-                className="aspect-[4/3] w-full"
+                className="h-full w-full"
                 offsetPercent={3.5}
+                continuousDrift
+                driftDelay={index * 1.4}
               />
             </div>
           </CurtainReveal>
+
+          {/* Continuous Subtle Architectural Light Sheen */}
+          <ShimmerSweep
+            delay={index * 1.3}
+            duration={2.8}
+            repeatDelay={4.2}
+          />
+
+          {/* Always-Visible Breathing Badge on Touch/Mobile Screens (< md) */}
+          <motion.div
+            aria-hidden="true"
+            animate={
+              prefersReduced
+                ? undefined
+                : { y: [0, -3, 0] }
+            }
+            transition={{
+              duration: 3.2,
+              delay: index * 0.4,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="pointer-events-none absolute right-3 bottom-3 z-10 inline-flex md:hidden items-center gap-1.5 rounded-full bg-[#111111]/90 px-3.5 py-1.5 text-[11px] font-medium tracking-tight text-white shadow-md backdrop-blur-sm"
+          >
+            <span>View Home</span>
+            <ArrowUpRight className="h-3 w-3" strokeWidth={1.75} />
+          </motion.div>
 
           {/* Floating Cursor Pill Badge (Desktop Hover) */}
           {!prefersReduced && (
@@ -139,11 +170,12 @@ function PropertyCard({
           )}
         </div>
 
-        {/* Clean Unboxed Typographic Metadata with Animated Hover Hairline */}
-        <div className="relative mt-4 border-t border-black/12 pt-3.5">
+        {/* Clean Unboxed Typographic Metadata with Travelling Glint Hairline */}
+        <div className="relative mt-4 pt-3.5">
+          <HairlineDivider delay={index * 0.15} />
           <span
             aria-hidden="true"
-            className="absolute top-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-[#111111] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+            className="absolute top-0 left-0 h-px w-full origin-left scale-x-0 bg-[#111111] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
           />
 
           <div className="flex items-center justify-between gap-4 text-[13px] text-[#52525B]">
@@ -185,7 +217,13 @@ export function PortfolioSection({ onSelectProperty }: PortfolioSectionProps) {
   return (
     <section id="listings" className="pb-16 md:pb-24">
       {/* Continuous Kinetic Florida Markets Ribbon */}
-      <MarqueeRibbon items={MARKET_RIBBON_ITEMS} className="mb-14 md:mb-20" />
+      <MarqueeRibbon items={MARKET_RIBBON_ITEMS} speedSeconds={24} />
+      <MarqueeRibbon
+        items={[...MARKET_RIBBON_ITEMS].reverse()}
+        reverse
+        speedSeconds={30}
+        className="mb-14 border-t-0 bg-white/30 md:mb-20"
+      />
 
       <div className="mx-auto max-w-[1320px] px-5 md:px-8 lg:px-10">
         {/* Section Header + Sliding Tab Switch */}
