@@ -1,0 +1,6 @@
+{
+  "name": "Killingsworth Homes",
+  "description": "Solo real estate advisory by Shaunda Killingsworth. Curated architectural residences and coastal investments across Florida.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

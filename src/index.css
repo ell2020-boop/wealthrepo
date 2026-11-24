@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #ECEEF2;
+  --bg-gradient: linear-gradient(160deg, #FFFFFF 0%, #EEF0F4 28%, #D8DCE5 58%, #ECEEF2 82%, #FFFFFF 100%);
+  --text-primary: #111111;
+  --text-secondary: #52525B;
+  --border-hairline: 1px solid rgba(17, 17, 17, 0.12);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    background-image:
+      radial-gradient(ellipse 75% 45% at 15% 20%, rgba(203, 210, 224, 0.55), transparent 65%),
+      radial-gradient(ellipse 65% 50% at 85% 60%, rgba(196, 203, 218, 0.5), transparent 65%),
+      var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    overflow-x: hidden;
+  }
+}
+
+.font-mono-index {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.headline-tight {
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.hairline-border {
+  border-color: rgba(17, 17, 17, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
